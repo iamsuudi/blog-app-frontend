@@ -33,6 +33,26 @@ export default function Status() {
             <div className="flex flex-col gap-3">
                 <p>Id{user.id}</p>
                 <p>Email{user.email}</p>
+                <button
+                    type="button"
+                    className=" bg-slate-600 text-white p-2 rounded-md"
+                    onClick={() => {
+                        axios({
+                            method: "post",
+                            baseURL: "http://localhost:3001/api",
+                            url: "/auth/logout",
+                        })
+                            .then((response) => {
+                                console.log(response.data);
+                                navigate("/auth/signin");
+                            })
+                            .catch((error) => {
+                                console.log(error.message);
+                            });
+                    }}
+                >
+                    Log out
+                </button>
             </div>
         </section>
     );
