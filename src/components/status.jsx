@@ -31,8 +31,8 @@ export default function Status() {
     return (
         <section>
             <div className="flex flex-col gap-3">
-                <p>Id{user.id}</p>
-                <p>Email{user.email}</p>
+                <p>Id - {user._id}</p>
+                <p>Email - {user.email}</p>
                 <button
                     type="button"
                     className=" bg-slate-600 text-white p-2 rounded-md"

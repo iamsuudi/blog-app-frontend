@@ -7,7 +7,7 @@ export default function Signin() {
 
     const signin = async (e) => {
         e.preventDefault();
-        console.log(e);
+        
         const f = Object.fromEntries(new FormData(e.target));
         console.log(f);
 
