@@ -1,10 +1,12 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
+const baseURL = "http://localhost:3001/api";
+
 export const getUser = async () => {
     const response = await axios({
         method: "get",
-        baseURL: "http://localhost:3001/api",
+        baseURL,
         url: "/auth/status",
     });
     console.log(response.data);
@@ -14,8 +16,18 @@ export const getUser = async () => {
 export const logout = async () => {
     const response = await axios({
         method: "post",
-        baseURL: "http://localhost:3001/api",
+        baseURL,
         url: "/auth/logout",
+    });
+    return response.data;
+};
+
+export const login = async (data) => {
+    const response = await axios({
+        method: "post",
+        baseURL,
+        url: "/auth/signin",
+        data,
     });
     return response.data;
 };

@@ -1,14 +1,19 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../services/user.api";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/user/userSlice";
 
 function App() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const user = useQuery({
         queryKey: ["user"],
         queryFn: getUser,
         retry: false,
     });
+
     if (user.isLoading) {
         return <div>loading data...</div>;
     }
@@ -23,7 +28,10 @@ function App() {
             </div>
         );
 
-    if (user.data) navigate("/auth/status");
+    if (user.data) {
+        dispatch(setUser(user.data));
+        navigate("/auth/status");
+    }
 }
 
 export default App;

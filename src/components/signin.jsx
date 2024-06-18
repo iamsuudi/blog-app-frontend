@@ -1,25 +1,31 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { login } from "../services/user.api";
 axios.defaults.withCredentials = true;
 
 export default function Signin() {
     const navigate = useNavigate();
 
+    const queryClient = useQueryClient();
+    const loginMutation = useMutation({
+        mutationFn: login,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+        },
+        onError: () => {
+            console.log("Couldn't sign in");
+        },
+    });
+
     const signin = async (e) => {
         e.preventDefault();
-        
-        const f = Object.fromEntries(new FormData(e.target));
-        console.log(f);
+
+        const form = Object.fromEntries(new FormData(e.target));
+        console.log(form);
 
         try {
-            const response = await axios({
-                method: "post",
-                baseURL: "http://localhost:3001/api",
-                url: "/auth/signin",
-                data: f,
-            });
-
-            console.log("response ", response.data);
+            loginMutation.mutate(form);
             navigate("/auth/status");
         } catch (error) {
             console.log(error.message);
@@ -40,6 +46,7 @@ export default function Signin() {
                     <input
                         type="email"
                         name="email"
+                        id="email"
                         required
                         placeholder="Email"
                         className=" p-2 border-2"
@@ -50,6 +57,7 @@ export default function Signin() {
                     <input
                         type="password"
                         name="password"
+                        id="password"
                         required
                         placeholder="Password"
                         className=" p-2 border-2"

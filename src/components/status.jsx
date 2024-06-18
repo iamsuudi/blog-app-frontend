@@ -1,32 +1,27 @@
 // import
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../services/user.api";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../features/user/userSlice";
 // Configure Axios to send cookies with requests
 axios.defaults.withCredentials = true;
 
 export default function Status() {
-    const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        axios({
-            method: "get",
-            baseURL: "http://localhost:3001/api",
-            url: "/auth/status",
-        })
-            .then((response) => {
-                console.log(response.data);
-                setUser(response.data);
-            })
-            .catch((error) => {
-                console.log(error.message);
-                navigate("/auth/signin");
-            });
-    }, []);
+    const user = useSelector(({ user }) => user);
+    const dispatch = useDispatch();
 
-    if (!user) return <p>loading...</p>;
+    const queryClient = useQueryClient();
+    const logoutMutation = useMutation({
+        mutationFn: logout,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+        },
+    });
 
     return (
         <section>
@@ -36,19 +31,10 @@ export default function Status() {
                 <button
                     type="button"
                     className=" bg-slate-600 text-white p-2 rounded-md"
-                    onClick={() => {
-                        axios({
-                            method: "post",
-                            baseURL: "http://localhost:3001/api",
-                            url: "/auth/logout",
-                        })
-                            .then((response) => {
-                                console.log(response.data);
-                                navigate("/auth/signin");
-                            })
-                            .catch((error) => {
-                                console.log(error.message);
-                            });
+                    onClick={async () => {
+                        logoutMutation.mutate();
+                        dispatch(removeUser());
+                        navigate("/auth/signin");
                     }}
                 >
                     Log out
