@@ -30,3 +30,13 @@ export const login = async (data) => {
     });
     return response.data;
 };
+
+export const signup = async (data) => {
+    const response = await axios({
+        method: "post",
+        baseURL,
+        url: "/auth/signup",
+        data,
+    });
+    return response.data;
+};

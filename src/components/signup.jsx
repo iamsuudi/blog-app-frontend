@@ -1,25 +1,20 @@
-import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
+import { signup } from "../services/user.api";
 
 export default function Signup() {
     const navigate = useNavigate();
 
-    const signup = async (e) => {
+    const signupHandler = async (e) => {
         e.preventDefault();
 
         const form = Object.fromEntries(new FormData(e.target));
 
         try {
-            const response = await axios({
-                method: "post",
-                baseURL: "http://localhost:3001/api",
-                url: "/auth/signup",
-                data: form,
-            });
-            console.log(response.data);
+            await signup(form);
             navigate("/auth/status");
         } catch (error) {
             console.log(error.message);
+            navigate("");
         }
     };
 
@@ -30,7 +25,7 @@ export default function Signup() {
                 action=""
                 method="post"
                 className=" flex flex-col gap-3"
-                onSubmit={signup}
+                onSubmit={signupHandler}
             >
                 <label htmlFor="">
                     email{" "}

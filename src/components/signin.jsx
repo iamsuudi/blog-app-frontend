@@ -54,7 +54,7 @@ export default function Signin() {
         console.log("error fetching user");
     }
 
-    const signin = async (e) => {
+    const signinHandler = async (e) => {
         e.preventDefault();
 
         const form = Object.fromEntries(new FormData(e.target));
@@ -70,7 +70,7 @@ export default function Signin() {
                     action=""
                     method="post"
                     className=" flex flex-col gap-3"
-                    onSubmit={signin}
+                    onSubmit={signinHandler}
                 >
                     <label htmlFor="">
                         email{" "}
