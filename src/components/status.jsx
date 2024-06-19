@@ -28,6 +28,7 @@ export default function Status() {
         },
         onError: () => {
             console.log("couldn't logout");
+            navigate("/auth/signin");
         },
     });
 
