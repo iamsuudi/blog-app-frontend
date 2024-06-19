@@ -1,45 +1,64 @@
-// import
-
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../services/user.api";
-import { useDispatch, useSelector } from "react-redux";
-import { removeUser } from "../features/user/userSlice";
-// Configure Axios to send cookies with requests
-axios.defaults.withCredentials = true;
+import { getUser, logout } from "../services/user.api";
+import { useEffect } from "react";
 
 export default function Status() {
     const navigate = useNavigate();
 
-    const user = useSelector(({ user }) => user);
-    const dispatch = useDispatch();
-
     const queryClient = useQueryClient();
+
+    const {
+        data: user,
+        isLoading,
+        isError,
+    } = useQuery({
+        queryKey: ["user"],
+        queryFn: getUser,
+        retry: false,
+        refetchOnWindowFocus: false,
+    });
+
     const logoutMutation = useMutation({
         mutationFn: logout,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["user"] });
+            // queryClient.invalidateQueries({ queryKey: ["user"] });
+            queryClient.setQueryData(["user"], null);
+            navigate("/auth/signin");
+        },
+        onError: () => {
+            console.log("couldn't logout");
         },
     });
 
-    return (
-        <section>
-            <div className="flex flex-col gap-3">
-                <p>Id - {user._id}</p>
-                <p>Email - {user.email}</p>
-                <button
-                    type="button"
-                    className=" bg-slate-600 text-white p-2 rounded-md"
-                    onClick={async () => {
-                        logoutMutation.mutate();
-                        dispatch(removeUser());
-                        navigate("/auth/signin");
-                    }}
-                >
-                    Log out
-                </button>
-            </div>
-        </section>
-    );
+    useEffect(() => {
+        if (isError) {
+            // console.log("error in status");
+            navigate("/auth/signin");
+        }
+    }, [isError, isLoading]);
+
+    if (isLoading) {
+        // console.log("is loading in status");
+        return <p>Loading</p>;
+    }
+
+    if (user)
+        return (
+            <section>
+                <div className="flex flex-col gap-3">
+                    <p>Id - {user._id}</p>
+                    <p>Email - {user.email}</p>
+                    <button
+                        type="button"
+                        className=" bg-slate-600 text-white p-2 rounded-md"
+                        onClick={async () => {
+                            await logoutMutation.mutateAsync();
+                        }}
+                    >
+                        Log out
+                    </button>
+                </div>
+            </section>
+        );
 }

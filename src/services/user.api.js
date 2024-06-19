@@ -9,7 +9,6 @@ export const getUser = async () => {
         baseURL,
         url: "/auth/status",
     });
-    console.log(response.data);
     return response.data;
 };
 
