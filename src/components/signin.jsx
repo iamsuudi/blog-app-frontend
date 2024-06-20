@@ -28,10 +28,6 @@ export default function Signin() {
             queryClient.invalidateQueries({ queryKey: ["user"] });
             navigate("/auth/status");
         },
-        onError: (err) => {
-            console.log({ err });
-            console.log("Couldn't sign in");
-        },
     });
 
     useEffect(() => {
@@ -50,16 +46,20 @@ export default function Signin() {
         return <p>loading...</p>;
     }
 
-    if (isError) {
-        console.log("error fetching user");
-    }
-
     const signinHandler = async (e) => {
         e.preventDefault();
 
         const form = Object.fromEntries(new FormData(e.target));
 
-        await loginMutation.mutateAsync(form);
+        try {
+            await loginMutation.mutateAsync(form);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    const googleHandler = async () => {
+        window.open("http://localhost:3001/api/auth/signin/google", "_self" );
     };
 
     if (!user)
@@ -104,6 +104,13 @@ export default function Signin() {
                         Signup
                     </NavLink>
                 </form>
+                <button
+                    type="button"
+                    onClick={googleHandler}
+                    className=" bg-green-600 text-white p-2 rounded-md"
+                >
+                    Google
+                </button>
             </section>
         );
 }

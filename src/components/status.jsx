@@ -26,10 +26,6 @@ export default function Status() {
             queryClient.setQueryData(["user"], null);
             navigate("/auth/signin");
         },
-        onError: () => {
-            console.log("couldn't logout");
-            navigate("/auth/signin");
-        },
     });
 
     useEffect(() => {
@@ -54,7 +50,12 @@ export default function Status() {
                         type="button"
                         className=" bg-slate-600 text-white p-2 rounded-md"
                         onClick={async () => {
-                            await logoutMutation.mutateAsync();
+                            try {
+                                await logoutMutation.mutateAsync();
+                            } catch (error) {
+                                console.log("couldn't logout");
+                                navigate("/auth/signin");
+                            }
                         }}
                     >
                         Log out
