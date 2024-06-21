@@ -4,6 +4,16 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../services/user.api";
 import { useEffect } from "react";
+import {
+    Button,
+    Card,
+    Flex,
+    Section,
+    Separator,
+    Text,
+    TextField,
+} from "@radix-ui/themes";
+import { GitHubLogoIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 
 export default function Signin() {
     const navigate = useNavigate();
@@ -58,72 +68,92 @@ export default function Signin() {
         }
     };
 
+    const signWithGoogle = () => {
+        window.open("http://localhost:3001/api/auth/signin/google", "_self");
+    };
+
+    const signWithGithub = () => {
+        window.open("http://localhost:3001/api/auth/signin/google", "_self");
+    };
+
     if (!user)
         return (
-            <section>
-                <h2 className="text-4xl text-center py-5 font-bold">Signin</h2>
-                <form
-                    action=""
-                    method="post"
-                    className=" flex flex-col gap-3"
-                    onSubmit={signinHandler}
-                >
-                    <label htmlFor="">
-                        email{" "}
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            required
-                            placeholder="Email"
-                            className=" p-2 border-2"
-                        />
-                    </label>
-                    <label htmlFor="">
-                        password{" "}
-                        <input
-                            type="password"
-                            name="password"
-                            id="password"
-                            required
-                            placeholder="Password"
-                            className=" p-2 border-2"
-                        />
-                    </label>
-                    <button
-                        type="submit"
-                        className=" bg-slate-600 text-white p-2 rounded-md"
+            <Section className="py-40 px-5">
+                <Card className="p-10 flex flex-col gap-10">
+                    <h2 className="text-4xl text-center font-bold">Sign In</h2>
+
+                    <form
+                        action=""
+                        method="post"
+                        className=" flex flex-col gap-3"
+                        onSubmit={signinHandler}
                     >
-                        Sign in
-                    </button>
-                    <NavLink to={"/auth/signup"} className={"underline"}>
+                        <label className="flex items-center gap-3">
+                            <Text className="w-20 font-black">Email</Text>
+                            <TextField.Root
+                                placeholder="Email"
+                                required
+                                type="email"
+                                name="email"
+                                variant="soft"
+                                color="gray"
+                            />
+                        </label>
+                        <label className="flex items-center gap-3">
+                            <Text className="w-20 font-black">Password</Text>
+                            <TextField.Root
+                                placeholder="Password"
+                                required
+                                type="password"
+                                name="password"
+                                variant="soft"
+                                className=""
+                                color="gray"
+                            />
+                        </label>
+                        <Button
+                            variant="solid"
+                            radius="large"
+                            type="submit"
+                            className="mt-5 hover:cursor-pointer"
+                        >
+                            SignIn
+                        </Button>
+                    </form>
+
+                    <Separator size="4" />
+
+                    <Flex direction={"column"} gap={"3"}>
+                        <Button
+                            color="yellow"
+                            variant="solid"
+                            type="button"
+                            onClick={signWithGoogle}
+                            className="hover:cursor-pointer"
+                        >
+                            <EnvelopeClosedIcon /> Signin with Google
+                        </Button>
+                        <Button
+                            highContrast
+                            color="gray"
+                            variant="solid"
+                            type="button"
+                            onClick={signWithGithub}
+                            className="hover:cursor-pointer"
+                        >
+                            <GitHubLogoIcon color="black" /> Signin with Github
+                        </Button>
+                    </Flex>
+
+                    <NavLink
+                        to={"/auth/signup"}
+                        className={
+                            "underline underline-offset-4 text-sm font-bold"
+                        }
+                    >
                         Signup
                     </NavLink>
-                </form>
-                <button
-                    type="button"
-                    onClick={() => {
-                        window.open(
-                            "http://localhost:3001/api/auth/signin/google",
-                            "_self",
-                        );
-                    }}
-                    className=" bg-green-600 text-white p-2 rounded-md"
-                >
-                    Google
-                </button>
-                <button
-                    type="button"
-                    onClick={() => {
-                        window.open(
-                            "http://localhost:3001/api/auth/signin/github",
-                            "_self",
-                        );
-                    }}
-                    className=" bg-blue-600 text-white p-2 rounded-md"
-                >
-                    Github
-                </button>
-            </section>
+                </Card>
+            </Section>
         );
 }
