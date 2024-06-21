@@ -21,16 +21,15 @@ export default function Status() {
 
     const logoutMutation = useMutation({
         mutationFn: logout,
-        onSuccess: () => {
-            // queryClient.invalidateQueries({ queryKey: ["user"] });
+        onSettled: (success, error) => {
             queryClient.setQueryData(["user"], null);
-            navigate("/auth/signin");
+            if (success) console.log("logout success ", success);
+            if (error) console.log("logout error ", error.message);
         },
     });
 
     useEffect(() => {
         if (isError) {
-            // console.log("error in status");
             navigate("/auth/signin");
         }
     }, [isError, isLoading]);
@@ -53,9 +52,9 @@ export default function Status() {
                             try {
                                 await logoutMutation.mutateAsync();
                             } catch (error) {
-                                console.log("couldn't logout");
-                                navigate("/auth/signin");
+                                //
                             }
+                            navigate("/auth/signin");
                         }}
                     >
                         Log out
