@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.hero {
+    background-color: hsl(0, 0%, 8%);
+    background-image: radial-gradient(
+        ellipse farthest-side at right top,
+        hsl(0, 0%, 43%) 0%,
+        hsl(0, 0%, 26%) 50%,
+        hsl(0, 0%, 8%) 100%
+    );
+    background-size: contain;
+}
