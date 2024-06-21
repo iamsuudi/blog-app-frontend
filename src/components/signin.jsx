@@ -24,9 +24,8 @@ export default function Signin() {
     const loginMutation = useMutation({
         mutationFn: login,
         onSuccess: (success) => {
-            console.log({ success });
+            console.log("login success ", success);
             queryClient.invalidateQueries({ queryKey: ["user"] });
-            navigate("/auth/status");
         },
     });
 
@@ -53,13 +52,10 @@ export default function Signin() {
 
         try {
             await loginMutation.mutateAsync(form);
+            // navigate("/auth/status");
         } catch (error) {
             console.log(error.message);
         }
-    };
-
-    const googleHandler = async () => {
-        window.open("http://localhost:3001/api/auth/signin/google", "_self" );
     };
 
     if (!user)
@@ -106,10 +102,27 @@ export default function Signin() {
                 </form>
                 <button
                     type="button"
-                    onClick={googleHandler}
+                    onClick={() => {
+                        window.open(
+                            "http://localhost:3001/api/auth/signin/google",
+                            "_self",
+                        );
+                    }}
                     className=" bg-green-600 text-white p-2 rounded-md"
                 >
                     Google
+                </button>
+                <button
+                    type="button"
+                    onClick={() => {
+                        window.open(
+                            "http://localhost:3001/api/auth/signin/github",
+                            "_self",
+                        );
+                    }}
+                    className=" bg-blue-600 text-white p-2 rounded-md"
+                >
+                    Github
                 </button>
             </section>
         );
