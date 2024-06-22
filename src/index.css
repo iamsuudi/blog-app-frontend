@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 .hero {
     background-color: hsl(0, 0%, 8%);
     background-image: radial-gradient(

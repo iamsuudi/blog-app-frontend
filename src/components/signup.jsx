@@ -76,7 +76,7 @@ export default function Signup() {
                         type="submit"
                         className="mt-5 hover:cursor-pointer"
                     >
-                        SignIn
+                        SignUp
                     </Button>
                 </form>
 

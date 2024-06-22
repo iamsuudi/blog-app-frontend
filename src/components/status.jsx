@@ -32,7 +32,7 @@ export default function Status() {
         if (isError) {
             navigate("/auth/signin");
         }
-    }, [isError, isLoading]);
+    }, [isLoading]);
 
     if (isLoading) {
         // console.log("is loading in status");
@@ -47,7 +47,7 @@ export default function Status() {
                     <p>Email - {user.email}</p>
                     <button
                         type="button"
-                        className=" bg-slate-600 text-white p-2 rounded-md"
+                        className="p-2 text-white rounded-md bg-slate-600"
                         onClick={async () => {
                             try {
                                 await logoutMutation.mutateAsync();

@@ -18,11 +18,7 @@ import { GitHubLogoIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 export default function Signin() {
     const navigate = useNavigate();
 
-    const {
-        data: user,
-        isLoading,
-        isError,
-    } = useQuery({
+    const { data: user, isLoading } = useQuery({
         queryKey: ["user"],
         queryFn: getUser,
         retry: false,
@@ -48,7 +44,7 @@ export default function Signin() {
             console.log("not redirecting");
             // return null;
         }
-    }, [isError, isLoading]);
+    }, [isLoading]);
 
     if (isLoading) {
         // console.log("loading");
@@ -62,7 +58,7 @@ export default function Signin() {
 
         try {
             await loginMutation.mutateAsync(form);
-            // navigate("/auth/status");
+            navigate("/auth/status");
         } catch (error) {
             console.log(error.message);
         }
@@ -78,14 +74,14 @@ export default function Signin() {
 
     if (!user)
         return (
-            <Section className="py-40 px-5">
-                <Card className="p-10 flex flex-col gap-10">
-                    <h2 className="text-4xl text-center font-bold">Sign In</h2>
+            <Section className="px-5 py-40">
+                <Card className="flex flex-col gap-10 p-10">
+                    <h2 className="text-4xl font-bold text-center">Sign In</h2>
 
                     <form
                         action=""
                         method="post"
-                        className=" flex flex-col gap-3"
+                        className="flex flex-col gap-3 "
                         onSubmit={signinHandler}
                     >
                         <label className="flex items-center gap-3">
