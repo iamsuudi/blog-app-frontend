@@ -5,7 +5,7 @@ import Nav from "../components/navbar";
 function App() {
     return (
         <>
-            <div className="flex flex-col items-center hero min-h-[100dvh]">
+            <div className="flex flex-col items-center min-h-[100dvh] from-black via-slate-800 to-black bg-gradient-to-tr">
                 <Nav />
                 <Outlet />
                 <Footer />

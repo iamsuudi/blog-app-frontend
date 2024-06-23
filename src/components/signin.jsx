@@ -84,8 +84,8 @@ export default function Signin() {
                         className="flex flex-col gap-3 "
                         onSubmit={signinHandler}
                     >
-                        <label className="flex items-center gap-3">
-                            <Text className="w-20 font-black">Email</Text>
+                        <label className="flex flex-col items-center gap-3">
+                            <Text className="font-black w-72">Email</Text>
                             <TextField.Root
                                 placeholder="Email"
                                 required
@@ -93,17 +93,18 @@ export default function Signin() {
                                 name="email"
                                 variant="soft"
                                 color="gray"
+                                className="w-full"
                             />
                         </label>
-                        <label className="flex items-center gap-3">
-                            <Text className="w-20 font-black">Password</Text>
+                        <label className="flex flex-col items-center gap-3">
+                            <Text className="font-black w-72">Password</Text>
                             <TextField.Root
                                 placeholder="Password"
                                 required
                                 type="password"
                                 name="password"
                                 variant="soft"
-                                className=""
+                                className="w-full"
                                 color="gray"
                             />
                         </label>

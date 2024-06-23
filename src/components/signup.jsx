@@ -37,18 +37,18 @@ export default function Signup() {
     };
 
     return (
-        <Section className="py-40 px-5">
-            <Card className="p-10 flex flex-col gap-10">
-                <h2 className="text-4xl text-center font-bold">Sign Up</h2>
+        <Section className="px-5 py-40">
+            <Card className="flex flex-col gap-10 p-10">
+                <h2 className="text-4xl font-bold text-center">Sign Up</h2>
 
                 <form
                     action=""
                     method="post"
-                    className=" flex flex-col gap-3"
+                    className="flex flex-col gap-3 "
                     onSubmit={signupHandler}
                 >
-                    <label className="flex items-center gap-3">
-                        <Text className="w-20 font-black">Email</Text>
+                    <label className="flex flex-col items-center gap-3">
+                        <Text className="font-black w-72">Email</Text>
                         <TextField.Root
                             placeholder="Email"
                             required
@@ -56,17 +56,18 @@ export default function Signup() {
                             name="email"
                             variant="soft"
                             color="gray"
+                            className="w-full"
                         />
                     </label>
-                    <label className="flex items-center gap-3">
-                        <Text className="w-20 font-black">Password</Text>
+                    <label className="flex flex-col items-center gap-3">
+                        <Text className="font-black w-72">Password</Text>
                         <TextField.Root
                             placeholder="Password"
                             required
                             type="password"
                             name="password"
                             variant="soft"
-                            className=""
+                            className="w-full"
                             color="gray"
                         />
                     </label>

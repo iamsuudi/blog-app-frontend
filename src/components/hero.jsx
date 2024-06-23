@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Hero() {
     return (
-        <Box className="flex flex-wrap items-center justify-center w-full max-w-screen-lg gap-10 px-5 py-40">
+        <Box className="flex flex-wrap items-center justify-center w-full max-w-screen-lg gap-10 px-5">
             <Card className="flex flex-col items-center gap-10 p-5 backdrop-blur-md">
                 <Flex direction="column" gap="2" className="max-w-96">
                     <Text className="text-4xl text-center">Welcome</Text>
