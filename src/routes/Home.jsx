@@ -3,7 +3,7 @@ import Blogs from "./Blogs";
 
 export default function Home() {
     return (
-        <div className="py-40 ">
+        <div className="flex flex-col items-center w-full max-w-screen-xl gap-20 py-40">
             <Hero />
             <Blogs />
         </div>

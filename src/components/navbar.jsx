@@ -6,7 +6,7 @@ export default function Nav() {
         <Flex
             width={"100%"}
             justify={"center"}
-            className="fixed z-10 shadow-lg backdrop-blur-sm bg-black/50"
+            className="fixed z-10 shadow-lg backdrop-blur-md "
         >
             <Section
                 size={"1"}
@@ -16,7 +16,7 @@ export default function Nav() {
                 <NavLink to={"/"}>
                     <Heading
                         size="6"
-                        className="text-2xl font-black text-transparent sm:text-4xl w-fit bg-clip-text bg-gradient-to-r from-purple-500 via-slate-100 to-blue-500"
+                        className="text-2xl font-black text-transparent sm:text-4xl w-fit bg-clip-text bg-gradient-to-r from-red-500 via-purple-500 to-yellow-500"
                     >
                         Members Only
                     </Heading>
