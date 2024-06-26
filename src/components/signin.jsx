@@ -35,11 +35,11 @@ export default function Signin() {
 
     useEffect(() => {
         if (user) {
-            console.log("from signin");
-            console.log({ user });
+            // console.log("from signin");
+            // console.log({ user });
 
             navigate("/blogs");
-            console.log("not redirecting");
+            // console.log("not redirecting");
             // return null;
         }
     }, [isLoading, isError]);

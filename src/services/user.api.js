@@ -40,3 +40,13 @@ export const signup = async (data) => {
     });
     return response.data;
 };
+
+export const updateMe = async (data) => {
+    const response = await axios({
+        method: "put",
+        baseURL,
+        url: "/users/me",
+        data,
+    });
+    return response.data;
+};

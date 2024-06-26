@@ -4,6 +4,7 @@ import Signin from "./components/signin";
 import Signup from "./components/signup";
 import Home from "./routes/Home";
 import Blogs from "./routes/Blogs";
+import Profile from "./routes/Profile";
 
 export default function Router() {
     const router = createBrowserRouter([
@@ -26,6 +27,10 @@ export default function Router() {
                 {
                     path: "/blogs",
                     element: <Blogs />,
+                },
+                {
+                    path: "/profile",
+                    element: <Profile />
                 },
             ],
         },
