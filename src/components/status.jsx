@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { getMe, logout } from "../services/user.api";
 import { useEffect } from "react";
-import { Avatar, DropdownMenu } from "@radix-ui/themes";
+import { Avatar, DropdownMenu, Spinner } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes/dist/esm/components/callout.js";
 
 export default function Status() {
@@ -43,7 +43,7 @@ export default function Status() {
 
     if (isLoading) {
         // console.log("is loading in status");
-        return <p>Loading</p>;
+        return <Spinner size={"3"} />;
     }
 
     if (user)
