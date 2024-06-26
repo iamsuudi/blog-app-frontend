@@ -10,12 +10,12 @@ import BlogDialog from "./blogDialog";
 /* eslint react/prop-types: 0 */
 export default function Blog({ blog }) {
     return (
-        <Card className="flex flex-col w-full gap-2 px-4 pt-6 pb-4 item max-w-96 h-[35rem]">
+        <Card className="flex flex-col w-full gap-2 px-4 pt-6 pb-4 item max-w-80 h-[30rem]">
             <div className="flex justify-end w-full px-5 h-9">
                 <BlogDialog blog={blog} />
             </div>
 
-            <Text className="h-40 px-1 mb-auto overflow-hidden text-2xl font-black w-[21rem]">
+            <Text className="h-40 px-1 mb-auto overflow-hidden text-xl font-black w-72">
                 {blog.title}
             </Text>
             <div className="flex gap-3 px-3">

@@ -2,7 +2,6 @@ import {
     ArrowTopRightIcon,
     BookmarkIcon,
     ChatBubbleIcon,
-    Cross1Icon,
     Link2Icon,
     ThickArrowDownIcon,
     ThickArrowUpIcon,
@@ -14,7 +13,6 @@ import {
     Dialog,
     Flex,
     Text,
-    TextField,
 } from "@radix-ui/themes";
 
 /* eslint react/prop-types: 0 */
@@ -26,18 +24,32 @@ export default function BlogDialog({ blog }) {
                     className="font-black rounded-lg hover:cursor-pointer"
                     variant="solid"
                     color="gray"
+                    size={"1"}
                     highContrast
                 >
                     Read Post <ArrowTopRightIcon color="black" />
                 </Button>
             </Dialog.Trigger>
 
-            <Dialog.Content className="relative w-full max-w-screen-md py-10">
+            <Dialog.Content className="relative w-full max-w-screen-sm pt-10">
                 <Flex gap="3" mt="4" justify="end" className="">
                     <Dialog.Close>
-                        <button className="absolute right-6 top-6">
-                            <Cross1Icon color="white" className="font-black" />
-                        </button>
+                        <div className="absolute font-black text-gray-400 rounded-lg right-6 top-6 hover:text-gray-100 hover:cursor-pointer">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={3.0}
+                                stroke="currentColor"
+                                className="size-5"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6 18 18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </div>
                     </Dialog.Close>
                 </Flex>
                 <Dialog.Title className="">{blog.description}</Dialog.Title>
@@ -83,28 +95,28 @@ export default function BlogDialog({ blog }) {
                     </AspectRatio>
                 </Flex>
 
-                <div className="flex justify-between w-full p-2 rounded-xl backdrop-blur-sm bg-black/20">
-                    <button className="flex items-center gap-3 text-sm font-bold ">
-                        <ThickArrowUpIcon className="font-black hover:text-white hover:cursor-pointer" />
+                <Card className="flex justify-between w-full rounded-xl backdrop-blur-sm">
+                    <button className="flex items-center gap-3 text-sm font-bold text-gray-300 hover:text-green-500">
+                        <ThickArrowUpIcon className="font-black hover:cursor-pointer" />
                         <span className="hidden md:inline">Upvote</span>
                     </button>
-                    <button className="flex items-center gap-3 text-sm font-bold ">
-                        <ThickArrowDownIcon className="font-black hover:text-white hover:cursor-pointer" />
+                    <button className="flex items-center gap-3 text-sm font-bold text-gray-300 hover:text-red-500">
+                        <ThickArrowDownIcon className="font-black hover:cursor-pointer" />
                         <span className="hidden md:inline">Downvote</span>
                     </button>
-                    <button className="flex items-center gap-3 text-sm font-bold ">
-                        <ChatBubbleIcon className="font-black hover:text-white hover:cursor-pointer" />
+                    <button className="flex items-center gap-3 text-sm font-bold text-gray-300 hover:text-yellow-500">
+                        <ChatBubbleIcon className="font-black hover:cursor-pointer" />
                         <span className="hidden md:inline">Comment</span>
                     </button>
-                    <button className="flex items-center gap-3 text-sm font-bold ">
-                        <BookmarkIcon className="font-black hover:text-white hover:cursor-pointer" />
+                    <button className="flex items-center gap-3 text-sm font-bold text-gray-300 hover:text-blue-500">
+                        <BookmarkIcon className="font-black hover:cursor-pointer" />
                         <span className="hidden md:inline">Bookmark</span>
                     </button>
-                    <button className="flex items-center gap-3 text-sm font-bold ">
-                        <Link2Icon className="font-black hover:text-white hover:cursor-pointer" />
+                    <button className="flex items-center gap-3 text-sm font-bold text-gray-300 hover:text-purple-500">
+                        <Link2Icon className="font-black hover:cursor-pointer" />
                         <span className="hidden md:inline">Copy</span>
                     </button>
-                </div>
+                </Card>
             </Dialog.Content>
         </Dialog.Root>
     );
