@@ -1,5 +1,6 @@
 import { Flex, Heading, Section } from "@radix-ui/themes";
 import { NavLink } from "react-router-dom";
+import Status from "./status";
 
 export default function Nav() {
     return (
@@ -11,16 +12,17 @@ export default function Nav() {
             <Section
                 size={"1"}
                 py={"5"}
-                className="w-full px-5 max-w-screen-2xl"
+                className="flex items-center justify-between w-full px-5 max-w-screen-2xl"
             >
                 <NavLink to={"/"}>
                     <Heading
                         size="6"
-                        className="text-2xl font-black text-transparent sm:text-4xl w-fit bg-clip-text bg-gradient-to-r from-red-500 via-purple-500 to-yellow-500"
+                        className="py-1 text-2xl font-black text-transparent sm:text-4xl w-fit bg-clip-text bg-gradient-to-r from-red-500 via-purple-500 to-yellow-500"
                     >
                         Members Only
                     </Heading>
                 </NavLink>
+                <Status />
             </Section>
         </Flex>
     );

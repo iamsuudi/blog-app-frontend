@@ -3,7 +3,7 @@ axios.defaults.withCredentials = true;
 
 const baseURL = "http://localhost:3001/api";
 
-export const getUser = async () => {
+export const getMe = async () => {
     const response = await axios({
         method: "get",
         baseURL,

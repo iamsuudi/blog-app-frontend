@@ -3,7 +3,7 @@ import App from "./app/App";
 import Signin from "./components/signin";
 import Signup from "./components/signup";
 import Home from "./routes/Home";
-import Status from "./components/status";
+import Blogs from "./routes/Blogs";
 
 export default function Router() {
     const router = createBrowserRouter([
@@ -24,8 +24,8 @@ export default function Router() {
                     element: <Signup />,
                 },
                 {
-                    path: "/auth/status",
-                    element: <Status />,
+                    path: "/blogs",
+                    element: <Blogs />,
                 },
             ],
         },

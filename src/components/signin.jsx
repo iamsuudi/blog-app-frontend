@@ -1,9 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { login } from "../services/user.api";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getUser } from "../services/user.api";
 import { useEffect } from "react";
+import { getMe, login } from "../services/user.api";
 import {
     Button,
     Card,
@@ -18,9 +16,9 @@ import { GitHubLogoIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 export default function Signin() {
     const navigate = useNavigate();
 
-    const { data: user, isLoading } = useQuery({
+    const { data: user, isLoading, isError } = useQuery({
         queryKey: ["user"],
-        queryFn: getUser,
+        queryFn: getMe,
         retry: false,
         refetchOnWindowFocus: false,
     });
@@ -40,11 +38,11 @@ export default function Signin() {
             console.log("from signin");
             console.log({ user });
 
-            navigate("/auth/status");
+            navigate("/blogs");
             console.log("not redirecting");
             // return null;
         }
-    }, [isLoading]);
+    }, [isLoading, isError]);
 
     if (isLoading) {
         // console.log("loading");
@@ -58,7 +56,7 @@ export default function Signin() {
 
         try {
             await loginMutation.mutateAsync(form);
-            navigate("/auth/status");
+            navigate("/blogs");
         } catch (error) {
             console.log(error.message);
         }
@@ -69,7 +67,7 @@ export default function Signin() {
     };
 
     const signWithGithub = () => {
-        window.open("http://localhost:3001/api/auth/signin/google", "_self");
+        window.open("http://localhost:3001/api/auth/signin/github", "_self");
     };
 
     if (!user)
