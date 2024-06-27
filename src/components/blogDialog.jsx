@@ -18,6 +18,9 @@ import { formatDate } from "../services/formatDate";
 
 /* eslint react/prop-types: 0 */
 export default function BlogDialog({ blog }) {
+    const { protocol, hostname } = window.location;
+    const thumbnailPath = `${protocol}//${hostname}:3001/${blog.thumbnail}`;
+
     return (
         <Dialog.Root>
             <Dialog.Trigger>
@@ -84,7 +87,7 @@ export default function BlogDialog({ blog }) {
 
                     <AspectRatio ratio={16 / 8} className="py-5">
                         <img
-                            src="img.png"
+                            src={thumbnailPath}
                             alt="A house in a forest"
                             style={{
                                 objectFit: "cover",

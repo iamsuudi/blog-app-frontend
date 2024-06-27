@@ -10,6 +10,9 @@ import { formatDate } from "../services/formatDate";
 
 /* eslint react/prop-types: 0 */
 export default function Blog({ blog }) {
+    const { protocol, hostname } = window.location;
+    const thumbnailPath = `${protocol}//${hostname}:3001/${blog.thumbnail}`;
+
     return (
         <Card className="flex flex-col w-full gap-2 px-4 pt-6 pb-4 item max-w-80 h-[30rem]">
             <div className="flex justify-end w-full px-5 h-9">
@@ -40,8 +43,8 @@ export default function Blog({ blog }) {
 
             <AspectRatio ratio={16 / 8}>
                 <img
-                    src="img.png"
-                    alt="A house in a forest"
+                    src={thumbnailPath}
+                    alt="Thumbnail"
                     style={{
                         objectFit: "cover",
                         width: "100%",

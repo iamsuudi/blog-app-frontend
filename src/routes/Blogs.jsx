@@ -43,7 +43,6 @@ export default function Blogs() {
             </Button>
             <section className="flex flex-wrap items-center justify-center w-full max-w-screen-xl gap-10 p-5 xl:justify-start">
                 {blogs.data.map((blog) => {
-                    console.log(blog);
                     return <Blog key={blog.id} blog={blog} />;
                 })}
             </section>
