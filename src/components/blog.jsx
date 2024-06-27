@@ -6,6 +6,7 @@ import {
     BookmarkIcon,
 } from "@radix-ui/react-icons";
 import BlogDialog from "./blogDialog";
+import { formatDate } from "../services/formatDate";
 
 /* eslint react/prop-types: 0 */
 export default function Blog({ blog }) {
@@ -33,8 +34,8 @@ export default function Blog({ blog }) {
                     );
                 })}
             </div>
-            <Text size={"2"} color="gray" className="px-5 mt-1">
-                {new Date(blog.date).toDateString()}
+            <Text size={"1"} color="gray" className="px-5 my-1">
+                {formatDate(blog.date)}
             </Text>
 
             <AspectRatio ratio={16 / 8}>

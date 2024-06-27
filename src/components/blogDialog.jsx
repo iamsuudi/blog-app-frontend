@@ -14,6 +14,7 @@ import {
     Flex,
     Text,
 } from "@radix-ui/themes";
+import { formatDate } from "../services/formatDate";
 
 /* eslint react/prop-types: 0 */
 export default function BlogDialog({ blog }) {
@@ -78,7 +79,7 @@ export default function BlogDialog({ blog }) {
                         })}
                     </div>
                     <Text size={"2"} color="gray" className="">
-                        {new Date().toDateString()}
+                        {formatDate(blog.date)}
                     </Text>
 
                     <AspectRatio ratio={16 / 8} className="py-5">
