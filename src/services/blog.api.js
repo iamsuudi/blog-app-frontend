@@ -12,6 +12,23 @@ export const getBlogs = async () => {
     return response.data;
 };
 
-export const createBlog = async () => {
-    //
+export const createBlog = async (data) => {
+    const response = await axios({
+        baseURL,
+        method: "post",
+        url: "/blogs",
+        data,
+    });
+
+    return response.data;
+};
+
+export const uploadThumbnail = async (blogId, data) => {
+    const response = await axios({
+        baseURL,
+        method: "put",
+        url: `/blogs/${blogId}/thumbnail`,
+        data,
+    });
+    return response.data;
 };

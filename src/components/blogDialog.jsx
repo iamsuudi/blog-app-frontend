@@ -63,16 +63,16 @@ export default function BlogDialog({ blog }) {
 
                 <Flex direction={"column"} gap={"3"}>
                     <div className="flex gap-3">
-                        {blog.tags.map((tag, index) => {
+                        {blog.tags.map((tag) => {
                             return (
                                 <Button
-                                    key={index}
+                                    key={tag.id}
                                     size={"1"}
                                     variant="soft"
                                     color="gray"
                                     className="px-3 rounded-lg w-fit outline outline-1 outline-slate-600"
                                 >
-                                    # {tag}
+                                    # {tag.content}
                                 </Button>
                             );
                         })}

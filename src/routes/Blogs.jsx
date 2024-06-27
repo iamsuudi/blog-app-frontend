@@ -1,33 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Blog from "../components/blog";
 import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../services/user.api";
 import { useEffect } from "react";
-import { Spinner } from "@radix-ui/themes";
+import { Button, Spinner } from "@radix-ui/themes";
 import { getBlogs } from "../services/blog.api";
-
-const blogs = [
-    {
-        id: 1,
-        // title: "CSS Variables (CSS Custom properties) for Beginners",
-        title: `Use the ghost variant to display a button without chrome. Ghost buttons behave like text in layout, as they use a negative margin to optically align themselves against their siblings while maintaining the padding in active and hover states.`,
-        description:
-            "Use the ghost variant to display a button without chrome.",
-        tags: ["javascript", "react", "web"],
-    },
-    {
-        id: 2,
-        title: "bkhoiyluigtyfdrd",
-        description: "qwertyuiopiuytrst",
-        tags: ["html", "react", "database"],
-    },
-    {
-        id: 3,
-        title: "bkhoiyluigtyfdrd",
-        description: "qwertyuiopiuytrst",
-        tags: ["python", "angular", "typscript"],
-    },
-];
+import { PlusIcon } from "@radix-ui/react-icons";
 
 export default function Blogs() {
     const navigate = useNavigate();
@@ -39,7 +17,7 @@ export default function Blogs() {
         refetchOnWindowFocus: false,
     });
 
-    const blogsRaw = useQuery({
+    const blogs = useQuery({
         queryKey: ["blogs"],
         queryFn: getBlogs,
         retry: false,
@@ -48,15 +26,24 @@ export default function Blogs() {
 
     useEffect(() => {
         if (user.isError) navigate("/auth/signin");
-        if (blogsRaw.isError) navigate("/auth/signin");
-    }, [user.isLoading, user.isError, blogsRaw.isError, blogsRaw.isLoading]);
+        if (blogs.isError) navigate("/auth/signin");
+    }, [user.isLoading, user.isError, blogs.isError, blogs.isLoading]);
 
-    if (blogsRaw.isLoading) return <Spinner size={"3"} />;
+    if (blogs.isLoading) return <Spinner size={"3"} />;
 
     return (
-        <div className="flex justify-center w-full py-40">
+        <div className="flex flex-col items-center justify-center w-full gap-20 py-40">
+            <Button color="blue" variant="solid">
+                <Link
+                    to={"/blog-form"}
+                    className="flex items-center gap-3 p-2 font-black w-fit hover:cursor-cell hover:text-white"
+                >
+                    Add Post <PlusIcon />
+                </Link>
+            </Button>
             <section className="flex flex-wrap items-center justify-center w-full max-w-screen-xl gap-10 p-5 xl:justify-start">
-                {blogs.map((blog) => {
+                {blogs.data.map((blog) => {
+                    console.log(blog);
                     return <Blog key={blog.id} blog={blog} />;
                 })}
             </section>

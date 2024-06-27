@@ -5,6 +5,7 @@ import Signup from "./components/signup";
 import Home from "./routes/Home";
 import Blogs from "./routes/Blogs";
 import Profile from "./routes/Profile";
+import BlogForm from "./routes/BlogForm";
 
 export default function Router() {
     const router = createBrowserRouter([
@@ -17,20 +18,24 @@ export default function Router() {
                     element: <Home />,
                 },
                 {
-                    path: "/auth/signin",
+                    path: "auth/signin",
                     element: <Signin />,
                 },
                 {
-                    path: "/auth/signup",
+                    path: "auth/signup",
                     element: <Signup />,
                 },
                 {
-                    path: "/blogs",
+                    path: "blogs",
                     element: <Blogs />,
                 },
                 {
-                    path: "/profile",
+                    path: "profile",
                     element: <Profile />
+                },
+                {
+                    path: "blog-form",
+                    element: <BlogForm />
                 },
             ],
         },

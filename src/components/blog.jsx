@@ -19,22 +19,22 @@ export default function Blog({ blog }) {
                 {blog.title}
             </Text>
             <div className="flex gap-3 px-3">
-                {blog.tags.map((tag, index) => {
+                {blog.tags.map((tag) => {
                     return (
                         <Button
-                            key={index}
+                            key={tag.id}
                             size={"1"}
                             variant="soft"
                             color="gray"
                             className="px-3 rounded-lg w-fit outline outline-1 outline-slate-600"
                         >
-                            # {tag}
+                            # {tag.content}
                         </Button>
                     );
                 })}
             </div>
             <Text size={"2"} color="gray" className="px-5 mt-1">
-                {new Date().toDateString()}
+                {new Date(blog.date).toDateString()}
             </Text>
 
             <AspectRatio ratio={16 / 8}>
