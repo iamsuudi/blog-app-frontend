@@ -32,3 +32,13 @@ export const uploadThumbnail = async (blogId, data) => {
     });
     return response.data;
 };
+
+export const updateBlog = async (blogId, data) => {
+    const response = await axios({
+        baseURL,
+        method: "put",
+        url: `/blogs/${blogId}`,
+        data,
+    });
+    return response.data;
+};

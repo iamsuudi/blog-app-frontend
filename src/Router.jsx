@@ -6,6 +6,7 @@ import Home from "./routes/Home";
 import Blogs from "./routes/Blogs";
 import Profile from "./routes/Profile";
 import BlogForm from "./routes/BlogForm";
+import BlogEdit from "./routes/BlogEdit";
 
 export default function Router() {
     const router = createBrowserRouter([
@@ -30,11 +31,15 @@ export default function Router() {
                     element: <Blogs />,
                 },
                 {
+                    path: "blogs/:blogId/edit",
+                    element: <BlogEdit />,
+                },
+                {
                     path: "profile",
                     element: <Profile />
                 },
                 {
-                    path: "blog-form",
+                    path: "blogs/create",
                     element: <BlogForm />
                 },
             ],

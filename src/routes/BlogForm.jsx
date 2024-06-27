@@ -37,7 +37,7 @@ export default function BlogForm() {
 
         const formObject = Object.fromEntries(new FormData(e.target));
         const formThumbnail = new FormData(e.target);
-        formObject.tags = tags;
+        formObject.tags = tags.map((tag) => ({ content: tag.content }));
         formObject.thumbnail = "";
 
         try {
@@ -59,7 +59,7 @@ export default function BlogForm() {
                 encType="multipart/form-data"
             >
                 <Card className="flex flex-col items-center w-full gap-5 px-5 py-10">
-                    <h1 className="mb-10 text-5xl font-bold">Profile</h1>
+                    <h1 className="mb-10 text-5xl font-bold">Post</h1>
 
                     <label className="flex flex-col items-center w-full gap-3">
                         <Text className="w-full font-black min-w-72">

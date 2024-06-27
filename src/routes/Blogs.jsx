@@ -31,21 +31,22 @@ export default function Blogs() {
 
     if (blogs.isLoading) return <Spinner size={"3"} />;
 
-    return (
-        <div className="flex flex-col items-center justify-center w-full gap-20 py-40">
-            <Button color="blue" variant="solid">
-                <Link
-                    to={"/blog-form"}
-                    className="flex items-center gap-3 p-2 font-black w-fit hover:cursor-cell hover:text-white"
-                >
-                    Add Post <PlusIcon />
-                </Link>
-            </Button>
-            <section className="flex flex-wrap items-center justify-center w-full max-w-screen-xl gap-10 p-5 xl:justify-start">
-                {blogs.data.map((blog) => {
-                    return <Blog key={blog.id} blog={blog} />;
-                })}
-            </section>
-        </div>
-    );
+    if (blogs.data)
+        return (
+            <div className="flex flex-col items-center justify-center w-full gap-20 py-40">
+                <Button color="blue" variant="solid">
+                    <Link
+                        to={"/blogs/create"}
+                        className="flex items-center gap-3 p-2 font-black w-fit hover:cursor-cell hover:text-white"
+                    >
+                        Add Post <PlusIcon />
+                    </Link>
+                </Button>
+                <section className="flex flex-wrap items-center justify-center w-full max-w-screen-xl gap-10 p-5 xl:justify-start">
+                    {blogs.data?.map((blog, index) => {
+                        return <Blog key={blog.id ?? index} blog={blog} />;
+                    })}
+                </section>
+            </div>
+        );
 }

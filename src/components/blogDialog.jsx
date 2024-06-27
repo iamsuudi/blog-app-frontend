@@ -70,7 +70,7 @@ export default function BlogDialog({ blog }) {
                         {blog.tags.map((tag) => {
                             return (
                                 <Button
-                                    key={tag.id}
+                                    key={tag._id}
                                     size={"1"}
                                     variant="soft"
                                     color="gray"
