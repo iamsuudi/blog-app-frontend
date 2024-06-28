@@ -1,8 +1,8 @@
 import { Card, Text, TextField } from "@radix-ui/themes";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getMe, updateMe } from "../services/user.api";
-import { useEffect } from "react";
+import { getMe, updateMe, updateMyAvatar } from "../services/user.api";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
     const navigate = useNavigate();
@@ -21,11 +21,21 @@ export default function Profile() {
     const queryClient = useQueryClient();
 
     const updateMutation = useMutation({
-        mutationFn: updateMe,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["user"] });
+        mutationFn: async ({ avatar, other }) => {
+            console.log({ avatar });
+            console.log({ other });
+            let updatedUser = await updateMe(other);
+            if (avatar) updatedUser = await updateMyAvatar(avatar);
+            return updatedUser;
+        },
+        onSuccess: (data) => {
+            queryClient.setQueryData(["user"], data);
         },
     });
+
+    const [avatarIsChanged, setAvatarIsChanged] = useState(false);
+    const [avatar, setAvatar] = useState(null);
+    // const [avatarPath, setAvatarPath] = useState(null);
 
     useEffect(() => {
         if (isError) navigate("/auth/signin");
@@ -34,10 +44,15 @@ export default function Profile() {
     const updateHandler = async (e) => {
         e.preventDefault();
 
-        const form = Object.fromEntries(new FormData(e.target));
+        const other = Object.fromEntries(new FormData(e.target));
+        const form = new FormData();
+        form.set("picture", avatar);
 
         try {
-            await updateMutation.mutateAsync(form);
+            await updateMutation.mutateAsync({
+                other,
+                avatar: avatarIsChanged ? form : null,
+            });
             navigate("/blogs");
         } catch (error) {
             console.log(error.message);
@@ -47,11 +62,18 @@ export default function Profile() {
     if (user)
         return (
             <div className="flex justify-center w-full px-5 py-40">
-                <form action="" method="post" onSubmit={updateHandler} className="w-full max-w-screen-sm ">
+                <form
+                    action=""
+                    method="post"
+                    onSubmit={updateHandler}
+                    className="w-full max-w-screen-sm "
+                >
                     <Card className="flex flex-col items-center w-full gap-5 px-5 py-10">
                         <h1 className="mb-10 text-5xl font-bold">Profile</h1>
-                        <label className="flex flex-col items-center gap-3">
-                            <Text className="font-black w-72">First Name</Text>
+                        <label className="flex flex-col items-center w-full max-w-lg gap-3">
+                            <Text className="w-full font-black">
+                                First Name
+                            </Text>
                             <TextField.Root
                                 placeholder="First Name"
                                 required
@@ -63,8 +85,8 @@ export default function Profile() {
                                 className="w-full"
                             />
                         </label>
-                        <label className="flex flex-col items-center gap-3">
-                            <Text className="font-black w-72">Last Name</Text>
+                        <label className="flex flex-col items-center w-full max-w-lg gap-3">
+                            <Text className="w-full font-black">Last Name</Text>
                             <TextField.Root
                                 placeholder="Last Name"
                                 // required
@@ -76,8 +98,8 @@ export default function Profile() {
                                 className="w-full"
                             />
                         </label>
-                        <label className="flex flex-col items-center gap-3">
-                            <Text className="font-black w-72">Email</Text>
+                        <label className="flex flex-col items-center w-full max-w-lg gap-3">
+                            <Text className="w-full font-black">Email</Text>
                             <TextField.Root
                                 placeholder="Email"
                                 // required
@@ -89,8 +111,10 @@ export default function Profile() {
                                 className="w-full"
                             />
                         </label>
-                        <label className="flex flex-col items-center gap-3">
-                            <Text className="font-black w-72">Github URL</Text>
+                        <label className="flex flex-col items-center w-full max-w-lg gap-3">
+                            <Text className="w-full font-black">
+                                Github URL
+                            </Text>
                             <TextField.Root
                                 placeholder="https://github.com/username"
                                 // required
@@ -102,8 +126,8 @@ export default function Profile() {
                                 className="w-full"
                             />
                         </label>
-                        <label className="flex flex-col items-center gap-3">
-                            <Text className="font-black w-72">About</Text>
+                        <label className="flex flex-col items-center w-full max-w-lg gap-3">
+                            <Text className="w-full font-black">About</Text>
                             <TextField.Root
                                 placeholder="E.g - BSc in Computer Science"
                                 // required
@@ -115,20 +139,39 @@ export default function Profile() {
                                 className="w-full"
                             />
                         </label>
-                        <label className="flex flex-col items-center gap-3">
-                            <Text className="font-black w-72">Avatar</Text>
+                        <label className="flex flex-col items-center w-full max-w-lg gap-3">
+                            <Text className="w-full font-black">Avatar</Text>
                             <input
                                 // required
                                 type="file"
                                 name="avatar"
                                 accept="image/,.png"
                                 className="w-full text-sm"
+                                onChange={({ target }) => {
+                                    const img = target.files[0];
+                                    const imgUrl = URL.createObjectURL(img);
+                                    setAvatar(img);
+                                    setAvatarIsChanged(true);
+                                }}
                             />
                         </label>
 
+                        {/* <AspectRatio ratio={16 / 8} className="max-w-lg border">
+                            <img
+                                src={avatarPath}
+                                alt="Thumbnail"
+                                style={{
+                                    objectFit: "cover",
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: "0.8rem",
+                                }}
+                            />
+                        </AspectRatio> */}
+
                         <button
                             type="submit"
-                            className="w-full p-2 mt-5 font-black bg-gray-600 rounded-lg max-w-72 hover:bg-gray-700"
+                            className="w-full max-w-lg p-2 mt-5 font-black bg-gray-600 rounded-lg hover:bg-gray-700"
                         >
                             Save
                         </button>

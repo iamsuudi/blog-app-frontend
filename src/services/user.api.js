@@ -50,3 +50,13 @@ export const updateMe = async (data) => {
     });
     return response.data;
 };
+
+export const updateMyAvatar = async (data) => {
+    const response = await axios({
+        method: "put",
+        baseURL,
+        url: "/users/me/avatar",
+        data,
+    });
+    return response.data;
+};

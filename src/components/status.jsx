@@ -46,6 +46,9 @@ export default function Status() {
         return <Spinner size={"3"} />;
     }
 
+    const { protocol, hostname } = window.location;
+    const avatarPath = `${protocol}//${hostname}:3001/${user.picture}`;
+
     if (user)
         return (
             <div className="flex items-center gap-5 p-3 font-bold rounded-full w-fit">
@@ -55,8 +58,8 @@ export default function Status() {
                         <button className="rounded-full w-fit">
                             <Avatar
                                 size="3"
-                                src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
-                                fallback="A"
+                                src={avatarPath}
+                                fallback={`${user.givenName[0] ?? ""}${user.familyName[0] ?? ""}`}
                                 radius="full"
                             />
                         </button>
