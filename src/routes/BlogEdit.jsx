@@ -9,13 +9,14 @@ import {
 } from "@radix-ui/themes";
 import { useNavigate, useParams } from "react-router-dom";
 import { getBlogs, updateBlog, uploadThumbnail } from "../services/blog.api";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMe } from "../services/user.api";
 import { useEffect, useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 
 export default function BlogEdit() {
     const navigate = useNavigate();
+    const { blogId } = useParams();
 
     const user = useQuery({
         queryKey: ["user"],
@@ -33,7 +34,28 @@ export default function BlogEdit() {
 
     const queryClient = useQueryClient();
 
-    const { blogId } = useParams();
+    const updateBlogMutation = useMutation({
+        mutationFn: async ({thumbnail, other}) => {
+            console.log({ other });
+            console.log({ thumbnail });
+            let updatedBlog = await updateBlog(blogId, other);
+            if (thumbnail) {
+                updatedBlog = await uploadThumbnail(blogId, thumbnail);
+            }
+            return updatedBlog;
+        },
+        onSuccess: (data) => {
+            console.log({ data });
+            queryClient.setQueryData(
+                ["blogs"],
+                blogs.data.map((blog) => {
+                    if (blog.id === blogId) return data;
+                    return blog;
+                }),
+            );
+        },
+    });
+
     const [blog, setBlog] = useState(null);
     const [tag, setTag] = useState("");
     const [thumnailIsChanged, setThumbnailIsChanged] = useState(false);
@@ -49,7 +71,6 @@ export default function BlogEdit() {
             if (blog.user.id !== user.data.id) navigate("/auth/signin");
             else {
                 setBlog(blog);
-                setThumbnailIsChanged(blog.thumbnail !== "");
 
                 const { protocol, hostname } = window.location;
                 setThumbnailPath(
@@ -63,22 +84,22 @@ export default function BlogEdit() {
         e.preventDefault();
 
         const formObject = Object.fromEntries(new FormData(e.target));
-        const formThumbnail = new FormData(e.target);
         formObject.tags = blog.tags.map((tag) => ({ content: tag.content }));
         delete formObject.thumbnail;
 
+        const formThumbnail = new FormData(e.target);
+        formThumbnail.delete("title");
+        formThumbnail.delete("url");
+        formThumbnail.delete("description");
+        formThumbnail.delete("tags");
+
+        console.log({ formObject });
+        console.log({ formThumbnail });
         try {
-            let updatedBlog = await updateBlog(blogId, formObject);
-            if (thumnailIsChanged) {
-                updatedBlog = await uploadThumbnail(blogId, formThumbnail);
-            }
-            queryClient.setQueryData(
-                ["blogs"],
-                blogs.data.map((blog) => {
-                    if (blog.id === blogId) return updatedBlog;
-                    return blog;
-                }),
-            );
+            await updateBlogMutation.mutateAsync({
+                thumbnail: thumnailIsChanged ? formThumbnail : null,
+                other: formObject,
+            });
             navigate("/blogs");
         } catch (error) {
             console.log(error.message);
@@ -163,7 +184,7 @@ export default function BlogEdit() {
                                 onChange={({ target }) => {
                                     const img = target.files[0];
                                     const imgUrl = URL.createObjectURL(img);
-
+                                    console.log("image is being manipulated");
                                     setThumbnailPath(imgUrl);
                                     setThumbnailIsChanged(true);
                                 }}
