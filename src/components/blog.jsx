@@ -16,32 +16,39 @@ import {
 import BlogDialog from "./blogDialog";
 import { formatDate } from "../services/formatDate";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 /* eslint react/prop-types: 0 */
-export default function Blog({ blog }) {
+export default function Blog({ blog, editable }) {
     const { protocol, hostname } = window.location;
     const thumbnailPath = `${protocol}//${hostname}:3001/${blog.thumbnail}`;
+
+    useEffect(() => {
+        // console.log({ blog });
+    }, []);
 
     if (blog)
         return (
             <Card className="flex flex-col w-full gap-2 px-4 pt-6 pb-4 item max-w-80 h-[30rem] rounded-3xl">
                 <div className="flex justify-between w-full px-0 h-9">
-                    <Link
-                        to={`/blogs/${blog.id}/edit`}
-                        className="hover:cursor-pointer"
-                    >
-                        <Tooltip content="Edit Blog">
-                            <IconButton
-                                radius="full"
-                                color="gold"
-                                variant="solid"
-                                size={"1"}
-                                className="hover:cursor-pointer"
-                            >
-                                <Pencil2Icon />
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
+                    {editable && (
+                        <Link
+                            to={`/blogs/${blog.id}/edit`}
+                            className="hover:cursor-pointer"
+                        >
+                            <Tooltip content="Edit Blog">
+                                <IconButton
+                                    radius="full"
+                                    color="gold"
+                                    variant="solid"
+                                    size={"1"}
+                                    className="hover:cursor-pointer"
+                                >
+                                    <Pencil2Icon />
+                                </IconButton>
+                            </Tooltip>
+                        </Link>
+                    )}
                     <BlogDialog blog={blog} />
                 </div>
 

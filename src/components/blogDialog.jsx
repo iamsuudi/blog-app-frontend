@@ -25,7 +25,7 @@ export default function BlogDialog({ blog }) {
         <Dialog.Root>
             <Dialog.Trigger>
                 <Button
-                    className="font-black rounded-lg hover:cursor-pointer"
+                    className="ml-auto font-black rounded-lg hover:cursor-pointer"
                     variant="solid"
                     color="gray"
                     size={"1"}
