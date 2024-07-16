@@ -7,12 +7,12 @@ import {
     TextArea,
     TextField,
 } from "@radix-ui/themes";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { getBlogs, updateBlog, uploadThumbnail } from "../services/blog.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMe } from "../services/user.api";
 import { useEffect, useState } from "react";
-import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 
 export default function BlogEdit() {
     const navigate = useNavigate();
@@ -93,8 +93,6 @@ export default function BlogEdit() {
         formThumbnail.delete("description");
         formThumbnail.delete("tags");
 
-        console.log({ formObject });
-        console.log({ formThumbnail });
         try {
             await updateBlogMutation.mutateAsync({
                 thumbnail: thumnailIsChanged ? formThumbnail : null,
@@ -118,7 +116,11 @@ export default function BlogEdit() {
                     className="w-full max-w-screen-sm "
                     encType="multipart/form-data"
                 >
-                    <Card className="flex flex-col items-center w-full gap-5 px-5 py-10">
+                    <Card className="relative flex flex-col items-center w-full gap-5 px-5 py-10">
+                    <NavLink to={-1} className={"absolute top-4 left-4"}>
+                        <ArrowLeftIcon className="size-4 stroke-white/50 hover:stroke-white" />
+                    </NavLink>
+                    
                         <h1 className="mb-10 text-5xl font-bold">Edit</h1>
 
                         <label className="flex flex-col items-center w-full gap-3">

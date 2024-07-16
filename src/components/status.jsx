@@ -46,10 +46,10 @@ export default function Status() {
         return <Spinner size={"3"} />;
     }
 
-    const { protocol, hostname } = window.location;
-    const avatarPath = `${protocol}//${hostname}:3001/${user.picture}`;
+    if (user) {
+        const { protocol, hostname } = window.location;
+        const avatarPath = `${protocol}//${hostname}:3001/${user.picture}`;
 
-    if (user)
         return (
             <div className="flex items-center gap-5 p-3 font-bold rounded-full w-fit">
                 <Text className="hidden sm:inline">{user.givenName}</Text>
@@ -82,6 +82,7 @@ export default function Status() {
                 </DropdownMenu.Root>
             </div>
         );
+    }
 }
 
 /* eslint react/prop-types: 0 */

@@ -7,7 +7,7 @@ export const getMe = async () => {
     const response = await axios({
         method: "get",
         baseURL,
-        url: "/auth/status",
+        url: "/me",
     });
     return response.data;
 };

@@ -1,8 +1,9 @@
 import { Card, Text, TextField } from "@radix-ui/themes";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMe, updateMe, updateMyAvatar } from "../services/user.api";
 import { useEffect, useState } from "react";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
 export default function Profile() {
     const navigate = useNavigate();
@@ -22,8 +23,6 @@ export default function Profile() {
 
     const updateMutation = useMutation({
         mutationFn: async ({ avatar, other }) => {
-            console.log({ avatar });
-            console.log({ other });
             let updatedUser = await updateMe(other);
             if (avatar) updatedUser = await updateMyAvatar(avatar);
             return updatedUser;
@@ -68,7 +67,11 @@ export default function Profile() {
                     onSubmit={updateHandler}
                     className="w-full max-w-screen-sm "
                 >
-                    <Card className="flex flex-col items-center w-full gap-5 px-5 py-10">
+                    <Card className="relative flex flex-col items-center w-full gap-5 px-5 py-10 bg-black/5 backdrop-blur-sm">
+                        <NavLink to={-1} className={"absolute top-4 left-4"}>
+                            <ArrowLeftIcon className="size-4 stroke-white/50 hover:stroke-white" />
+                        </NavLink>
+                        
                         <h1 className="mb-10 text-5xl font-bold">Profile</h1>
                         <label className="flex flex-col items-center w-full max-w-lg gap-3">
                             <Text className="w-full font-black">
@@ -149,7 +152,7 @@ export default function Profile() {
                                 className="w-full text-sm"
                                 onChange={({ target }) => {
                                     const img = target.files[0];
-                                    const imgUrl = URL.createObjectURL(img);
+                                    // const imgUrl = URL.createObjectURL(img);
                                     setAvatar(img);
                                     setAvatarIsChanged(true);
                                 }}

@@ -16,7 +16,7 @@ import { GitHubLogoIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 export default function Signin() {
     const navigate = useNavigate();
 
-    const { data: user, isLoading, isError } = useQuery({
+    const { data: user, isLoading } = useQuery({
         queryKey: ["user"],
         queryFn: getMe,
         retry: false,
@@ -42,7 +42,7 @@ export default function Signin() {
             // console.log("not redirecting");
             // return null;
         }
-    }, [isLoading, isError]);
+    }, [isLoading]);
 
     if (isLoading) {
         // console.log("loading");

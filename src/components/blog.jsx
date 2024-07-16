@@ -24,7 +24,7 @@ export default function Blog({ blog }) {
 
     if (blog)
         return (
-            <Card className="flex flex-col w-full gap-2 px-4 pt-6 pb-4 item max-w-80 h-[30rem]">
+            <Card className="flex flex-col w-full gap-2 px-4 pt-6 pb-4 item max-w-80 h-[30rem] rounded-3xl">
                 <div className="flex justify-between w-full px-0 h-9">
                     <Link
                         to={`/blogs/${blog.id}/edit`}

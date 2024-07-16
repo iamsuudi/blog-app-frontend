@@ -6,12 +6,12 @@ import {
     TextArea,
     TextField,
 } from "@radix-ui/themes";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { createBlog, uploadThumbnail } from "../services/blog.api";
 import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../services/user.api";
 import { useEffect, useState } from "react";
-import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 
 export default function BlogForm() {
     const navigate = useNavigate();
@@ -58,7 +58,10 @@ export default function BlogForm() {
                 className="w-full max-w-screen-sm "
                 encType="multipart/form-data"
             >
-                <Card className="flex flex-col items-center w-full gap-5 px-5 py-10">
+                <Card className="relative flex flex-col items-center w-full gap-5 px-5 py-10">
+                    <NavLink to={-1} className={"absolute top-4 left-4"}>
+                        <ArrowLeftIcon className="size-4 stroke-white/50 hover:stroke-white" />
+                    </NavLink>
                     <h1 className="mb-10 text-5xl font-bold">Post</h1>
 
                     <label className="flex flex-col items-center w-full gap-3">
@@ -182,7 +185,7 @@ export default function BlogForm() {
 
                     <button
                         type="submit"
-                        className="w-full p-2 mt-5 font-black bg-green-600 rounded-lg max-w-72 hover:bg-green-700"
+                        className="w-full p-2 mt-5 font-black rounded-lg bg-gradient-to-r from-red-500 via-purple-900 to-yellow-500"
                     >
                         Create
                     </button>

@@ -5,7 +5,15 @@ import Nav from "../components/navbar";
 function App() {
     return (
         <>
-            <div className="flex flex-col items-center min-h-[100dvh] from-black via-slate-800 to-black bg-gradient-to-tr w-full">
+            <div
+                className="flex flex-col items-center min-h-[100dvh] w-full"
+                style={{
+                    background: "URL('bg.svg')",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed",
+                }}
+            >
                 <Nav />
                 <Outlet />
                 <Footer />
